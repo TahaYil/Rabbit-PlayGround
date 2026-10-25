@@ -16,7 +16,7 @@ public class RabbitConfig {
     public static final String BOOK_EXCHANGE_NAME="book.exchange";
     public static final String BOOK_ROUTING_KEY="book.created";
 
-    private final String PAYMENT_QUEUE_NAME="payment.queue";
+    public static final String PAYMENT_QUEUE_NAME="payment.book.queue";
     private final String PAYMENT_EXCHANGE_NAME="payment.exchange";
     private final String PAYMENT_ROUTING_KEY="payment.done";
 
@@ -34,13 +34,11 @@ public class RabbitConfig {
     }
 
 
-    // 1. Converter tanımı: Doğrudan JacksonJsonMessageConverter kullanıyoruz
     @Bean
     public JacksonJsonMessageConverter converter() {
         return new JacksonJsonMessageConverter();
     }
 
-    // 2. RabbitTemplate
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
@@ -48,7 +46,6 @@ public class RabbitConfig {
         return rabbitTemplate;
     }
 
-    // 3. Listener Factory
     @Bean
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
             ConnectionFactory connectionFactory,
